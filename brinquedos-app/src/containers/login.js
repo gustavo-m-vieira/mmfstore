@@ -1,38 +1,66 @@
-import React, { Component } from "react";
-import { LinkContainer } from "react-router-bootstrap";
+import React, { useState } from "react";
+import { Auth } from "aws-amplify";
+import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import LoaderButton from "../components/LoaderButton";
+import { useFormFields } from "../libs/hooksLib";
+import "./Login.css";
 
-export default class Login extends Component {
-    render() {
-        return (
-            <form>
-                <h3>Sign In</h3>
+export default function Login(props) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [fields, handleFieldChange] = useFormFields({
+    email: "",
+    password: ""
+  });
 
-                <div className="form-group">
-                    <label>Email address</label>
-                    <input type="email" className="form-control" placeholder="Enter email" />
-                </div>
+  function validateForm() {
+    return fields.email.length > 0 && fields.password.length > 0;
+  }
 
-                <div className="form-group">
-                    <label>Password</label>
-                    <input type="password" className="form-control" placeholder="Enter password" />
-                </div>
+  async function handleSubmit(event) {
+    event.preventDefault();
 
-                <div className="form-group">
-                    <div className="custom-control custom-checkbox">
-                        <input type="checkbox" className="custom-control-input" id="customCheck1" />
-                        <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
-                    </div>
-                </div>
+    setIsLoading(true);
 
-                <button type="submit" className="btn btn-primary btn-block">Submit</button>
-                
-            </form>
-        );
+    try {
+      await Auth.signIn(fields.email, fields.password);
+      props.userHasAuthenticated(true);
+      props.history.push("/");
+    } catch (e) {
+      alert(e.message);
+      setIsLoading(false);
     }
-}
+  }
 
-/*
-<p className="forgot-password text-right">
-                    Forgot <a href="#">password?</a>
-                </p>
-                */
+  return (
+    <div className="Login">
+      <form onSubmit={handleSubmit}>
+        <FormGroup controlId="email" bsSize="large">
+          <ControlLabel>Email</ControlLabel>
+          <FormControl
+            autoFocus
+            type="email"
+            value={fields.email}
+            onChange={handleFieldChange}
+          />
+        </FormGroup>
+        <FormGroup controlId="password" bsSize="large">
+          <ControlLabel>Password</ControlLabel>
+          <FormControl
+            type="password"
+            value={fields.password}
+            onChange={handleFieldChange}
+          />
+        </FormGroup>
+        <LoaderButton
+          block
+          type="submit"
+          bsSize="large"
+          isLoading={isLoading}
+          disabled={!validateForm()}
+        >
+          Login
+        </LoaderButton>
+      </form>
+    </div>
+  );
+}
