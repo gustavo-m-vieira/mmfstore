@@ -13,7 +13,7 @@ function App(props) {
   async function handleLogout() {
     await Auth.signOut();
     props.history.push("/login");
-    
+
     userHasAuthenticated(false);
   }
 
@@ -50,7 +50,12 @@ function App(props) {
         <Navbar.Collapse>
         <Nav pullRight>
           {isAuthenticated
-            ? <NavItem onClick={handleLogout}>Logout</NavItem>
+            ? <>
+                <NavItem onClick={handleLogout}>Logout</NavItem>
+                <LinkContainer to="/order/new">
+                  <NavItem>Comprar</NavItem>
+                </LinkContainer>
+                </>
             : <>
                 <LinkContainer to="/signup">
                   <NavItem>Signup</NavItem>
@@ -58,11 +63,10 @@ function App(props) {
                 <LinkContainer to="/login">
                   <NavItem>Login</NavItem>
                 </LinkContainer>
+                
               </>
           }
-            <LinkContainer to="/order">
-              <NavItem>Comprar</NavItem>
-            </LinkContainer>
+            
           </Nav>
         </Navbar.Collapse>
       </Navbar>

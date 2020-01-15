@@ -33,7 +33,7 @@ export default function NewProduct(props) {
     setIsLoading(true);
   
     try {
-      await createProduct({ content });
+      await createProduct({ code , description });
       props.history.push("/");
     } catch (e) {
       alert(e);
@@ -41,9 +41,9 @@ export default function NewProduct(props) {
     }
   }
   
-  function createProduct(note) {
-    return API.post("notes", "/notes", {
-      body: note
+  function createProduct(product) {
+    return API.post("Requests", "/Requests", {
+      body: product
     });
   }
 
