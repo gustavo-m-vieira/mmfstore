@@ -4,7 +4,7 @@ import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import { useFormFields } from "../libs/hooksLib";
 import "./Login.css";
-
+import App from "../App";
 export default function Login(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [fields, handleFieldChange] = useFormFields({
@@ -23,7 +23,7 @@ export default function Login(props) {
 
     try {
       await Auth.signIn(fields.email, fields.password);
-      props.userHasAuthenticated(true);
+      App.setAutent();
       props.history.push("/");
     } catch (e) {
       alert(e.message);

@@ -1,0 +1,41 @@
+.productName{
+    font-size: 3em;
+}
+
+.product{
+    display: flex;
+}
+
+.productImage{
+    width: 250px;
+    height: 250px;
+    margin-right: 50px;
+    margin-bottom: 50px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+
+
+.price{
+    font-size: 2.5em;
+    padding: 15px;
+    margin-left: 50px;
+}
+
+.buy{
+    width: 250px;
+    height: 50px;
+}
+
+.qtd{
+    width: 80px;
+    height: 55px;
+    text-align: center;
+    margin-right: 15px;
+    margin-top: 1px;
+}
+
+.qtdPrice{
+    display: flex;
+}

@@ -10,7 +10,7 @@ export default function NewOrder(props) {
   const [productId, setProductId] = useState("");
   const [amount, setAmount] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
+  const [status, setStatus] = useState("N");
   function validateForm() {
     return productId.length > 0 && amount.length > 0;
   }
@@ -21,7 +21,7 @@ export default function NewOrder(props) {
     setIsLoading(true);
   
     try {
-      await createOrder({ productId , amount });
+      await createOrder({ productId , amount , status});
       props.history.push("/");
     } catch (e) {
       alert(e);

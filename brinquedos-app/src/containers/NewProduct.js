@@ -4,15 +4,17 @@ import LoaderButton from "../components/LoaderButton";
 import config from "../config";
 import "./NewProduct.css";
 import { API } from "aws-amplify";
+import { s3Upload } from "../libs/awsLib";
 
 export default function NewProduct(props) {
   const file = useRef(null);
-  const [code, setCode] = useState("");
-  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [nameProduct, setNameProduct] = useState("");
+  const [qtdAvailable, setQtdAvailable] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
   function validateForm() {
-    return description.length > 0 && code.length > 0;
+    return nameProduct.length > 0 && price.length > 0 && file.current;
   }
 
   function handleFileChange(event) {
@@ -33,7 +35,11 @@ export default function NewProduct(props) {
     setIsLoading(true);
   
     try {
-      await createProduct({ code , description });
+      const image = file.current
+      ? await s3Upload(file.current)
+      : null;
+
+      await createProduct({ nameProduct , qtdAvailable , price , image });
       props.history.push("/");
     } catch (e) {
       alert(e);
@@ -42,7 +48,7 @@ export default function NewProduct(props) {
   }
   
   function createProduct(product) {
-    return API.post("Requests", "/Requests", {
+    return API.post("Requests", "/createProduct", {
       body: product
     });
   }
@@ -50,25 +56,34 @@ export default function NewProduct(props) {
   return (
     <div className="NewProduct">
       <form onSubmit={handleSubmit}>
-      <FormGroup controlId="code">
-        <ControlLabel>Código</ControlLabel>
+      <FormGroup controlId="nameProduct">
+        <ControlLabel>Nome</ControlLabel>
           <FormControl
-            value={code}
+            value={nameProduct}
             componentClass="input"
-            onChange={e => setCode(e.target.value)}
+            onChange={e => setNameProduct(e.target.value)}
           />
         </FormGroup>
-        <FormGroup controlId="description">
-        <ControlLabel>Descrição</ControlLabel>
+        <FormGroup controlId="price">
+        <ControlLabel>Preço</ControlLabel>
           <FormControl
-            value={description}
-            componentClass="textarea"
-            onChange={e => setDescription(e.target.value)}
+            value={price}
+            componentClass="input"
+            onChange={e => setPrice(e.target.value)}
+          />
+        </FormGroup>
+        <FormGroup controlId="qtdAvailable">
+        <ControlLabel>Quantidade Disponível</ControlLabel>
+          <FormControl
+            value={qtdAvailable}
+            type="number"
+            min="0"
+            onChange={e => setQtdAvailable(e.target.value)}
           />
         </FormGroup>
         <FormGroup controlId="file">
           <ControlLabel>Foto do Produto</ControlLabel>
-          <FormControl onChange={handleFileChange} type="file" />
+          <FormControl onChange={handleFileChange} type="file" required />
         </FormGroup>
         <LoaderButton
           block

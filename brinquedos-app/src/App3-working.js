@@ -9,6 +9,43 @@ import { LinkContainer } from "react-router-bootstrap";
 import { Auth } from "aws-amplify";
 
 
+function HomePage(props) {
+  const isAuthenticated = props.isAuthenticated;
+  if(isAuthenticated){
+    return <Routes appProps={this.state.isAuthenticated} />;
+  }
+  return (
+    <div className="Login">
+          <form onSubmit={this.handleSubmit}>
+            <FormGroup controlId="email" bsSize="large">
+              <ControlLabel>Email</ControlLabel>
+              <FormControl
+                autoFocus
+                type="email"
+                value={this.state.email} onChange={this.handleChange}
+              />
+            </FormGroup>
+            <FormGroup controlId="password" bsSize="large">
+              <ControlLabel>Password</ControlLabel>
+              <FormControl
+                type="password"
+                value={this.state.password} onChange={this.handleChange2}
+              />
+            </FormGroup>
+            <LoaderButton
+              block
+              type="submit"
+              bsSize="large"
+              isLoading={this.state.isLoading}
+              disabled={!this.validateForm()}
+            >
+              Login
+            </LoaderButton>
+          </form>
+        </div>
+  );
+}
+
 class App extends React.Component {
     constructor(props){
       super(props);
@@ -19,8 +56,7 @@ class App extends React.Component {
         isAuthenticating: true,
         isLoading: false,
         email: "",
-        password: "",
-        page: "Login"
+        password: ""
 
       }
       this.onLoad();
@@ -60,7 +96,7 @@ class App extends React.Component {
     }
 
     handleSubmit = () => {
-      /*this.state.IsLoading=true;
+      this.state.IsLoading=true;
 
       try {
         Auth.signIn(this.state.email, this.state.password);
@@ -71,9 +107,7 @@ class App extends React.Component {
       } catch (e) {
         alert(e.message);
         this.state.isLoading=false;
-      }*/
-      this.isAuthenticated = true;
-      this.state.page="signup";
+      }
     }
 
     handleChange = (event) => {
@@ -83,50 +117,14 @@ class App extends React.Component {
       this.setState({password: event.target.value});
     }
 
-    HomePage() {
-      const isAuthenticated = this.state.isAuthenticated;
-      if(isAuthenticated&&this.state.page=="others"){
-        return <Routes appProps={isAuthenticated} />;
-      }else if(!isAuthenticated&&this.state.page=="Login"){
-        return (
-          <div className="Login">
-            <form onSubmit={this.handleSubmit}>
-              <FormGroup controlId="email" bsSize="large">
-                <ControlLabel>Email</ControlLabel>
-                <FormControl
-                  autoFocus
-                  type="email"
-                  value={this.state.email} onChange={this.handleChange}
-                />
-              </FormGroup>
-              <FormGroup controlId="password" bsSize="large">
-                <ControlLabel>Password</ControlLabel>
-                <FormControl
-                  type="password"
-                  value={this.state.password} onChange={this.handleChange2}
-                />
-              </FormGroup>
-              <LoaderButton
-                block
-                type="submit"
-                bsSize="large"
-                isLoading={this.state.isLoading}
-                disabled={!this.validateForm()}
-              >
-                Login
-              </LoaderButton>
-            </form>
-          </div>
-        );
-      }else if(!isAuthenticated&&this.state.page=="signup"){
-        return <div>Somebody Help-me</div>;
-      }
-      
-    }
+    render(){
 
-    navBar(){
-      return(
-        <Navbar fluid collapseOnSelect>
+      this.onLoad();
+      
+      return (
+        !this.state.isAuthenticating &&
+        <div className="App container">
+          <Navbar fluid collapseOnSelect>
             <Navbar.Header>
               <Navbar.Brand>
                 <Link to="/">Meu Malvado Favorito Store</Link>
@@ -166,35 +164,40 @@ class App extends React.Component {
             </Nav>
           </Navbar.Collapse>
         </Navbar>
-      );
-    }
-
-    render(){
-      Auth.currentSession()
-        .then(()=>{
-          this.state.isAuthenticated=true;
-          this.state.isconfirmed=true;
-        })
-      .catch(err => {
-        if (err !== 'No current user') {
-          alert(err);
-        }
-      });
-      this.state.isconfirmed=true;
-      this.state.isAuthenticating= false;
-      
-      return (
-        <div className="App container">
-         {this.state.isconfirmed
-         ?
-          this.navBar()
-          
+        {this.state.isAuthenticated
+        ?    
+        <Routes appProps={this.state.isAuthenticated} />
         :
-        <div>Help</div>
-        }
-        {
-          this.HomePage()
-        }
+        <div className="Login">
+          <form onSubmit={this.handleSubmit}>
+            <FormGroup controlId="email" bsSize="large">
+              <ControlLabel>Email</ControlLabel>
+              <FormControl
+                autoFocus
+                type="email"
+                value={this.state.email} onChange={this.handleChange}
+              />
+            </FormGroup>
+            <FormGroup controlId="password" bsSize="large">
+              <ControlLabel>Password</ControlLabel>
+              <FormControl
+                type="password"
+                value={this.state.password} onChange={this.handleChange2}
+              />
+            </FormGroup>
+            <LoaderButton
+              block
+              type="submit"
+              bsSize="large"
+              isLoading={this.state.isLoading}
+              disabled={!this.validateForm()}
+            >
+              Login
+            </LoaderButton>
+          </form>
+        </div>
+      }
+
     </div>
     )
     }
