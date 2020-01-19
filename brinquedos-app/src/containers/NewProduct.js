@@ -3,7 +3,7 @@ import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import config from "../config";
 import "./NewProduct.css";
-import { API } from "aws-amplify";
+import { Storage , API } from "aws-amplify";
 import { s3Upload } from "../libs/awsLib";
 
 export default function NewProduct(props) {
@@ -39,6 +39,7 @@ export default function NewProduct(props) {
       ? await s3Upload(file.current)
       : null;
 
+      const image2 = await Storage.vault.get(image);
       await createProduct({ nameProduct , qtdAvailable , price , image });
       props.history.push("/");
     } catch (e) {

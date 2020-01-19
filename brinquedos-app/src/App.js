@@ -1,202 +1,108 @@
-import React, { Component,useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { Nav, Navbar, NavItem } from "react-bootstrap";
-import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import LoaderButton from "./components/LoaderButton";
 import "./App.css";
 import Routes from "./Routes";
 import { LinkContainer } from "react-router-bootstrap";
 import { Auth } from "aws-amplify";
 
 
-class App extends React.Component {
-    constructor(props){
-      super(props);
-      this.state = {
-        carrinho: new Set(),
-        isAuthenticated : false,
-        isconfirmed : false,
-        isAuthenticating: true,
-        isLoading: false,
-        email: "",
-        password: "",
-        page: "Login"
-
-      }
-      this.onLoad();
-    }
-
-    onLoad(){
-        Auth.currentSession()
-        .then(()=>{
-          this.state.isAuthenticated=true;
-          this.state.isconfirmed=true;
-        })
-      .catch(err => {
-        if (err !== 'No current user') {
-          alert(err);
-        }});
+function App(props) {
+  const [isAuthenticated, userHasAuthenticated] = useState(false);
+  const [carrinho , setCarrinho] = useState([]);
+  const [conjProd , setConjProd] = useState([]);
   
-    
-      this.state.isAuthenticating= false;
-    }
-    handleLogout = () => {
-      Auth.signOut();
-      this.props.history.push("/");
-  
-      this.state.isAuthenticated = false;
-    }
+  async function handleLogout() {
+    await Auth.signOut();
+    props.history.push("/login");
 
-    validateForm = () => {
-      return this.state.email.length > 0 && this.state.password.length > 0;
-    }
-
-    setPassword(value){
-      this.state.password = value;
-    }
-
-    setEmail(value){
-      this.state.password = value;
-    }
-
-    handleSubmit = () => {
-      /*this.state.IsLoading=true;
-
-      try {
-        Auth.signIn(this.state.email, this.state.password);
-        this.state.isAuthenticated = true;
-        this.state.email = "";
-        this.state.password = "";
-        this.props.history.push("/");
-      } catch (e) {
-        alert(e.message);
-        this.state.isLoading=false;
-      }*/
-      this.isAuthenticated = true;
-      this.state.page="signup";
-    }
-
-    handleChange = (event) => {
-      this.setState({email: event.target.value});
-    }
-    handleChange2 = (event) => {
-      this.setState({password: event.target.value});
-    }
-
-    HomePage() {
-      const isAuthenticated = this.state.isAuthenticated;
-      if(isAuthenticated&&this.state.page=="others"){
-        return <Routes appProps={isAuthenticated} />;
-      }else if(!isAuthenticated&&this.state.page=="Login"){
-        return (
-          <div className="Login">
-            <form onSubmit={this.handleSubmit}>
-              <FormGroup controlId="email" bsSize="large">
-                <ControlLabel>Email</ControlLabel>
-                <FormControl
-                  autoFocus
-                  type="email"
-                  value={this.state.email} onChange={this.handleChange}
-                />
-              </FormGroup>
-              <FormGroup controlId="password" bsSize="large">
-                <ControlLabel>Password</ControlLabel>
-                <FormControl
-                  type="password"
-                  value={this.state.password} onChange={this.handleChange2}
-                />
-              </FormGroup>
-              <LoaderButton
-                block
-                type="submit"
-                bsSize="large"
-                isLoading={this.state.isLoading}
-                disabled={!this.validateForm()}
-              >
-                Login
-              </LoaderButton>
-            </form>
-          </div>
-        );
-      }else if(!isAuthenticated&&this.state.page=="signup"){
-        return <div>Somebody Help-me</div>;
-      }
-      
-    }
-
-    navBar(){
-      return(
-        <Navbar fluid collapseOnSelect>
-            <Navbar.Header>
-              <Navbar.Brand>
-                <Link to="/">Meu Malvado Favorito Store</Link>
-              </Navbar.Brand>
-              <Navbar.Toggle />
-            </Navbar.Header>
-            <Navbar.Collapse>
-            <Nav pullRight>
-            {this.state.isAuthenticated
-              ?
-                <>
-                  <LinkContainer to="/co">
-                    <NavItem>Finalizar</NavItem>
-                  </LinkContainer>
-                  <LinkContainer to="/product/fa2af4f0-3880-11ea-a41e-2d8d12841741">
-                    <NavItem>Produto</NavItem>
-                  </LinkContainer>
-                  <NavItem>{this.state.carrinho.size}</NavItem>
-                  <LinkContainer to="/order/new">
-                    <NavItem>Comprar</NavItem>
-                  </LinkContainer>
-                  <LinkContainer to="/Profile">
-                    <NavItem>Meu Perfil</NavItem>
-                  </LinkContainer>
-                  <NavItem onClick={this.handleLogout}>Sair</NavItem>
-                  </>
-              : <>
-                  <LinkContainer to="/signup">
-                    <NavItem>Cadastro</NavItem>
-                  </LinkContainer>
-                  <LinkContainer to="/">
-                    <NavItem>Entrar</NavItem>
-                  </LinkContainer>
-                  
-                </>
-            }
-            </Nav>
-          </Navbar.Collapse>
-        </Navbar>
-      );
-    }
-
-    render(){
-      Auth.currentSession()
-        .then(()=>{
-          this.state.isAuthenticated=true;
-          this.state.isconfirmed=true;
-        })
-      .catch(err => {
-        if (err !== 'No current user') {
-          alert(err);
-        }
-      });
-      this.state.isconfirmed=true;
-      this.state.isAuthenticating= false;
-      
-      return (
-        <div className="App container">
-         {this.state.isconfirmed
-         ?
-          this.navBar()
-          
-        :
-        <div>Help</div>
-        }
-        {
-          this.HomePage()
-        }
-    </div>
-    )
-    }
+    userHasAuthenticated(false);
   }
+
+  const [isAuthenticating, setIsAuthenticating] = useState(true);
+  
+  const setCarStorage = () => {
+    
+      const serializedCarrinho = localStorage.getItem('@brinquedo-app/carrinho');
+      if(serializedCarrinho == null){
+        setCarrinho(Array(0));
+      }else{
+        setCarrinho(JSON.parse(serializedCarrinho));
+      }
+      
+  }
+
+
+  function setCarrinhoLocalStorage(){
+    
+      const serializedCarrinho = localStorage.getItem('@brinquedo-app/carrinho');
+      if(serializedCarrinho == null){
+        setCarrinho(Array(0));
+      }else{
+        setCarrinho(JSON.parse(serializedCarrinho));
+      }
+      
+  }
+
+  useEffect(() => {
+    onLoad();
+  }, []);
+  
+  async function onLoad() {
+    try {
+      await Auth.currentSession();
+      userHasAuthenticated(true);
+    }
+    catch(e) {
+      if (e !== 'No current user') {
+        alert(e);
+      }
+    }
+  
+    setIsAuthenticating(false);
+    setCarrinhoLocalStorage();
+  } 
+  return (
+    !isAuthenticating &&
+    <div className="App container">
+      <Navbar fluid collapseOnSelect>
+        <Navbar.Header>
+          <Navbar.Brand>
+            <Link to="/">Meu Malvado Favorito Store</Link>
+          </Navbar.Brand>
+          <Navbar.Toggle />
+        </Navbar.Header>
+        <Navbar.Collapse>
+        <Nav pullRight>
+          {isAuthenticated
+            ?
+              <>
+                <LinkContainer to="/shopcart">
+                  <NavItem><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"> Carrinho</span></NavItem>
+                </LinkContainer>
+                <NavItem>{carrinho.length}</NavItem>
+                <LinkContainer to="/Profile">
+                  <NavItem>Meu Perfil</NavItem>
+                </LinkContainer>
+                <NavItem onClick={handleLogout}>Sair</NavItem>
+                </>
+            : <>
+                <LinkContainer to="/signup">
+                  <NavItem>Cadastro</NavItem>
+                </LinkContainer>
+                <LinkContainer to="/login">
+                  <NavItem>Entrar</NavItem>
+                </LinkContainer>
+                
+              </>
+          }
+            
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
+      <Routes appProps={{ setCarStorage , isAuthenticated, userHasAuthenticated, carrinho, setCarrinho , conjProd , setConjProd }} />
+    </div>
+  );
+}
+
 export default withRouter(App);

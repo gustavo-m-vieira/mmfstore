@@ -4,7 +4,7 @@ import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import { useFormFields } from "../libs/hooksLib";
 import "./Login.css";
-import App from "../App";
+
 export default function Login(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [fields, handleFieldChange] = useFormFields({
@@ -23,7 +23,10 @@ export default function Login(props) {
 
     try {
       await Auth.signIn(fields.email, fields.password);
-      App.setAutent();
+      localStorage.setItem('@brinquedo-app/email' , fields.email);
+      const serializedName = JSON.stringify("Gustavo Vieira");
+      localStorage.setItem('@brinquedo-app/name' , serializedName );
+      props.userHasAuthenticated(true);
       props.history.push("/");
     } catch (e) {
       alert(e.message);

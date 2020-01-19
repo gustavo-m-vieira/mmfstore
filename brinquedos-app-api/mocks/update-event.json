@@ -1,0 +1,11 @@
+{
+  "body": "{\"amount\":\"6\",\"productId\":\"20200003\"}",
+  "pathParameters": {
+    "orderId": "5d4a02f0-3670-11ea-808f-b5c3a2cd3c12"
+  },
+  "requestContext": {
+    "identity": {
+      "cognitoIdentityId": "USER-SUB-1234"
+    }
+  }
+}

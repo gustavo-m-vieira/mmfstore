@@ -11,3 +11,31 @@
 .Home .lander p {
   color: #999;
 }
+
+.products{
+  display: flex;
+  width: 1050px;
+  height: 600px;
+  text-align: center;
+  align-items : center;
+}
+
+.product21{
+  width: 350px;
+  height: 600px;
+  padding: 50px;
+}
+
+.productImage{
+  width: 250px;
+  height: 250px;
+}
+
+.content{
+  width: 250px;
+  height: 250px;
+}
+
+.card{
+  width: 18rem;
+}

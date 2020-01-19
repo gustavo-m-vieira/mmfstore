@@ -1,0 +1,8 @@
+{
+    "body": "{\"nameProduct\":\"Minion1\",\"qtdAvailable\":\"2\",\"price\":\"200.00\",\"image\":\"minion1.jpg\"}",
+    "requestContext": {
+      "identity": {
+        "cognitoIdentityId": "USER-SUB-1234"
+      }
+    }
+  }

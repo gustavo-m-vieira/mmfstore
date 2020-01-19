@@ -1,0 +1,8 @@
+{
+    "body": "{\"name\":\"Gustavo\",\"email\":\"gustavo.vieira@poli.ufrj.br\"}",
+    "requestContext": {
+      "identity": {
+        "cognitoIdentityId": "USER-SUB-1234"
+      }
+    }
+  }

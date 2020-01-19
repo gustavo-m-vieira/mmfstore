@@ -1,0 +1,160 @@
+SES()                                                                    SES()
+
+
+
+NNAAMMEE
+       ses -
+
+DDEESSCCRRIIPPTTIIOONN
+       This  document  contains  reference  information  for the _A_m_a_z_o_n _S_i_m_p_l_e
+       _E_m_a_i_l _S_e_r_v_i_c_e (Amazon SES) API, version 2010-12-01.  This  document  is
+       best used in conjunction with the _A_m_a_z_o_n _S_E_S _D_e_v_e_l_o_p_e_r _G_u_i_d_e .
+
+       NNOOTTEE::
+          For  a  list of Amazon SES endpoints to use in service requests, see
+          _R_e_g_i_o_n_s _a_n_d _A_m_a_z_o_n _S_E_S in the _A_m_a_z_o_n _S_E_S _D_e_v_e_l_o_p_e_r _G_u_i_d_e .
+
+AAVVAAIILLAABBLLEE CCOOMMMMAANNDDSS
+       +o clone-receipt-rule-set
+
+       +o create-configuration-set
+
+       +o create-configuration-set-event-destination
+
+       +o create-configuration-set-tracking-options
+
+       +o create-custom-verification-email-template
+
+       +o create-receipt-filter
+
+       +o create-receipt-rule
+
+       +o create-receipt-rule-set
+
+       +o create-template
+
+       +o delete-configuration-set
+
+       +o delete-configuration-set-event-destination
+
+       +o delete-configuration-set-tracking-options
+
+       +o delete-custom-verification-email-template
+
+       +o delete-identity
+
+       +o delete-identity-policy
+
+       +o delete-receipt-filter
+
+       +o delete-receipt-rule
+
+       +o delete-receipt-rule-set
+
+       +o delete-template
+
+       +o describe-active-receipt-rule-set
+
+       +o describe-configuration-set
+
+       +o describe-receipt-rule
+
+       +o describe-receipt-rule-set
+
+       +o get-account-sending-enabled
+
+       +o get-custom-verification-email-template
+
+       +o get-identity-dkim-attributes
+
+       +o get-identity-mail-from-domain-attributes
+
+       +o get-identity-notification-attributes
+
+       +o get-identity-policies
+
+       +o get-identity-verification-attributes
+
+       +o get-send-quota
+
+       +o get-send-statistics
+
+       +o get-template
+
+       +o help
+
+       +o list-configuration-sets
+
+       +o list-custom-verification-email-templates
+
+       +o list-identities
+
+       +o list-identity-policies
+
+       +o list-receipt-filters
+
+       +o list-receipt-rule-sets
+
+       +o list-templates
+
+       +o put-configuration-set-delivery-options
+
+       +o put-identity-policy
+
+       +o reorder-receipt-rule-set
+
+       +o send-bounce
+
+       +o send-bulk-templated-email
+
+       +o send-custom-verification-email
+
+       +o send-email
+
+       +o send-raw-email
+
+       +o send-templated-email
+
+       +o set-active-receipt-rule-set
+
+       +o set-identity-dkim-enabled
+
+       +o set-identity-feedback-forwarding-enabled
+
+       +o set-identity-headers-in-notifications-enabled
+
+       +o set-identity-mail-from-domain
+
+       +o set-identity-notification-topic
+
+       +o set-receipt-rule-position
+
+       +o test-render-template
+
+       +o update-account-sending-enabled
+
+       +o update-configuration-set-event-destination
+
+       +o update-configuration-set-reputation-metrics-enabled
+
+       +o update-configuration-set-sending-enabled
+
+       +o update-configuration-set-tracking-options
+
+       +o update-custom-verification-email-template
+
+       +o update-receipt-rule
+
+       +o update-template
+
+       +o verify-domain-dkim
+
+       +o verify-domain-identity
+
+       +o verify-email-identity
+
+       +o wait
+
+
+
+                                                                         SES()
