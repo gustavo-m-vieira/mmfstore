@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "name": "brinquedos-app",
   "version": "0.1.0",
   "private": true,
@@ -43,31 +42,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-=======
-  "name": "notes-app-api",
-  "version": "1.1.0",
-  "description": "A Node.js starter for the Serverless Framework with async/await and unit test support",
-  "main": "handler.js",
-  "scripts": {
-    "test": "jest"
-  },
-  "author": "",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/AnomalyInnovations/serverless-nodejs-starter.git"
-  },
-  "devDependencies": {
-    "aws-sdk": "^2.602.0",
-    "jest": "^24.9.0",
-    "serverless-bundle": "^1.2.5",
-    "serverless-dotenv-plugin": "^2.1.1",
-    "serverless-offline": "^5.3.3"
-  },
-  "dependencies": {
-    "serverless": "^1.61.2",
-    "stripe": "^8.0.1",
-    "uuid": "^3.3.3"
->>>>>>> c06fd9247429d5152e130697d1ac9bf0fa1e85a5
   }
 }
