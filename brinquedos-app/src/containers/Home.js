@@ -10,10 +10,10 @@ export default function Home(props) {
 
   useEffect(() => {
     async function onLoad() {
-      if (!props.isAuthenticated) {
-        return;
+      if(props.isAuthenticated == false){
+        props.history.push("/login");
       }
-  
+      
       try {
         const products = await loadProducts();
         setProducts(products);
@@ -30,14 +30,10 @@ export default function Home(props) {
     }
   
     onLoad();
-  }, [props.isAuthenticated]);
+  }, []);
   
   function loadProducts() {
     return API.get("Requests", "/listProducts");
-  }
-
-  function loadImages(image){
-    return Storage.vault.get(image);
   }
   
   
@@ -54,7 +50,7 @@ export default function Home(props) {
             <div class="caption">
               <h3>{product.nameProduct}</h3>
               <p>R${product.price}</p>
-              <p><a href={"/product/".concat(product.idProduct)} class="btn btn-primary" role="button">Comprar</a></p>
+              <p><a onClick={() => props.history.push("/product/".concat(product.idProduct))} class="btn btn-primary" role="button">Comprar</a></p>
             </div>
           </div>
         </div>

@@ -61,30 +61,30 @@ export default function ShopCart(props) {
     event.preventDefault();
   
     setIsUpdating(true);
-  
-    try {
-      const array = products;
-      var email = localStorage.getItem('@brinquedo-app/email');
-      const serializedName = localStorage.getItem('@brinquedo-app/name');
-      var name = JSON.parse(serializedName);
-      for (let index = 0; index < array.length; index++) {
-        const element = array[index];
-        var productId = element.idProduct;
-        var amount = element.qtd;
-        var status = "solicitado";
-        await createOrder({ productId , amount , status});
-      }
-      //alert(name);
-      const total = finalPrice;
-      await sendMail({ name , email , total});
-      localStorage.removeItem('@brinquedo-app/carrinho');
-      props.setCarrinho([]);
-      alert("Pedido Realizado!");
-      props.history.push("/");
-    } catch (e) {
-      alert(e);
+    props.history.push("/shopcart/confirmAddress");
+    // try {
+    //   const array = products;
+    //   var email = localStorage.getItem('@brinquedo-app/email');
+    //   // const serializedName = localStorage.getItem('@brinquedo-app/name');
+    //   // var name = JSON.parse(serializedName);
+    //   for (let index = 0; index < array.length; index++) {
+    //     const element = array[index];
+    //     var productId = element.idProduct;
+    //     var amount = element.qtd;
+    //     var status = "solicitado";
+    //     await createOrder({ productId , amount , status});
+    //   }
+    //   //alert(name);
+    //   const total = finalPrice;
+    //   await sendMail({ email , total});
+    //   localStorage.removeItem('@brinquedo-app/carrinho');
+    //   props.setCarrinho([]);
+    //   alert("Pedido Realizado!");
+    //   props.history.push("/");
+    // } catch (e) {
+    //   alert(e);
       setIsUpdating(false);
-    }
+    //}
   }
 
   async function handleSubmitItem(idProduct){
@@ -101,20 +101,20 @@ export default function ShopCart(props) {
     setFlag(!flag);
   }
   
-  function createOrder(order) {
-    /*API.post("Requests", "/sendMail", {
-      body: order
-    });*/
-    return API.post("Requests", "/Requests", {
-      body: order
-    });
-  }
+  // function createOrder(order) {
+  //   /*API.post("Requests", "/sendMail", {
+  //     body: order
+  //   });*/
+  //   return API.post("Requests", "/Requests", {
+  //     body: order
+  //   });
+  // }
 
-  function sendMail(order) {
-    return API.post("Requests", "/sendMail", {
-      body: order
-    });
-  }
+  // function sendMail(order) {
+  //   return API.post("Requests", "/sendMail", {
+  //     body: order
+  //   });
+  // }
 
 
   function validateForm(){
@@ -181,7 +181,7 @@ export default function ShopCart(props) {
         isLoading={isUpdating}
         disabled={!validateForm()}
       >
-        Solicitar
+        Informar Endereço de Entrega
       </LoaderButton>
       <br/>
       <br/>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import { useFormFields } from "../libs/hooksLib";
 
@@ -9,6 +9,16 @@ export default function Profile(props) {
         password: ""
       });
 
+      useEffect(() => {
+        async function onLoad() {
+            if(props.isAuthenticated == false){
+                props.history.push("/login");
+              }
+
+        }
+
+        onLoad();
+      }, []);
 
     return (
         <>

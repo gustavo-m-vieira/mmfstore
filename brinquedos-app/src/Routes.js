@@ -8,7 +8,7 @@ import AppliedRoute from "./components/AppliedRoute";
 import Profile from "./containers/Profile";
 import ProductPage from "./containers/ProductPage";
 import shopCart from "./containers/shopCart";
-import NewProduct from "./containers/NewProduct";
+import Address from "./containers/Address";
 
 export default function Routes( {appProps} ) {
   return (
@@ -18,8 +18,9 @@ export default function Routes( {appProps} ) {
       <AppliedRoute path="/login" exact component={Login} appProps={appProps} />
       <AppliedRoute path="/profile" exact component={Profile} appProps={appProps} />
       <AppliedRoute path="/product/:idProduct" exact component={ProductPage} appProps={appProps} />
+      <AppliedRoute path="/shopcart/confirmAddress" exact component={Address} appProps={appProps} />
       <AppliedRoute path="/shopcart" exact component={shopCart} appProps={appProps} />
-      <AppliedRoute path="/np" exact component={NewProduct} appProps={appProps} />
+      
       { /* Finally, catch all unmatched routes */ }
       <Route component={NotFound} />
     </Switch>

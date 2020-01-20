@@ -54,8 +54,7 @@ export default function ProductPage(props){
   }, [props.match.params.idProduct]);
   
    
-  async function handleSubmit(event){
-    event.preventDefault();   
+  async function handleSubmit(event){  
     /*props.setCarrinho([{
       idProduct: idProduct,
       nameProduct: nameProduct,
@@ -92,45 +91,33 @@ export default function ProductPage(props){
     alert("Adicionado ao Carrinho!");
     const serializedCarrinho = JSON.stringify(car);
     localStorage.setItem('@brinquedo-app/carrinho' , serializedCarrinho );
-    props.history.push("/shopcart");
+    props.history.push("/");
   }
   
+
   return (
-    <div className="Product">
+    <div className="product">
       {isLoading
       ?
       <div><BoxLoading /></div> 
-      :
-      product && (
-        <>
-        <form onSubmit={handleSubmit}>
-          <div class="productName">{nameProduct}</div>
-          <br/><br/>
-          <div class="product">
-            <img className="productImage"  src={product.imageURL} alt={nameProduct} />
-    
-            <div class="info">
-              <h1 class="price">R$ {price}</h1>
-              <div class="qtdPrice">
-                <FormGroup controlId="qtd" bsSize="large">
-                  <FormControl className="qtd" type="number" value={qtd} onChange={e => setQtd(e.target.value)} min="1"/>
-                </FormGroup>
-                <LoaderButton
-                  block
-                  className="buy"
-                  type="submit"
-                  bsSize="large"
-                  bsStyle="primary"
-                  isLoading={isLoading}
-                >
-                  Adicionar ao Carrinho
-                </LoaderButton>
-              </div>
+      : 
+      <div className="product__main">
+        <div className="product__Name">
+          <p className="product__Name__Name">{product.nameProduct}</p>
+        </div>
+        <div className="product__main-info">
+          <img className="product__image" src={product.imageURL}/>
+          <div className="product__info">
+            <div className="product__price">
+              <p className="product__price__price">R$ {product.price}</p>
+            </div>
+            <div className="product__qtd">
+              <input className="product__qtd__qtd" type="number" value={qtd} onChange={e => setQtd(e.target.value)} />
+              <div className="product__button" onClick={(() => handleSubmit())}>Adicionar ao Carrinho</div>
             </div>
           </div>
-        </form>
-        </>
-      )
+        </div>
+      </div>      
       }
     </div>
   );

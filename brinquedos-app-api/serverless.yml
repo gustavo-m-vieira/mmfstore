@@ -29,7 +29,7 @@ provider:
       Action:
         - dynamodb:DescribeTable
         - dynamodb:Query
-        - dynamodb:Scan
+        - dynamodb:Scan 
         - dynamodb:GetItem
         - dynamodb:PutItem
         - dynamodb:UpdateItem

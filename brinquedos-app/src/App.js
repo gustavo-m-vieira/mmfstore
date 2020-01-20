@@ -78,12 +78,12 @@ function App(props) {
             ?
               <>
                 <LinkContainer to="/shopcart">
-                  <NavItem><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"> Carrinho</span></NavItem>
+                  <NavItem>
+                    <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"> Carrinho</span></NavItem>
                 </LinkContainer>
-                <NavItem>{carrinho.length}</NavItem>
-                <LinkContainer to="/Profile">
+                {/* <LinkContainer to="/Profile">
                   <NavItem>Meu Perfil</NavItem>
-                </LinkContainer>
+                </LinkContainer> */}
                 <NavItem onClick={handleLogout}>Sair</NavItem>
                 </>
             : <>
